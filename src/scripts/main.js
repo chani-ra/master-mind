@@ -1,5 +1,9 @@
 
 
-document.querySelector(".start-btn").addEventListener("click",() => {
-    window.location.href =  "./src/pages/form.html";
+document.getElementById("start-btn").addEventListener("click", () => {
+    window.location.href = "./src/pages/form.html";
 });
+
+
+
+//טופס כניסה ושמירה בלוקל-סטורייג

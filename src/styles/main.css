@@ -168,7 +168,7 @@ body {
   50%      { transform: scale(1.1); }
 }
 
-.start-btn {
+.btn {
   margin-top: 3rem;
   padding: 1rem 3.5rem;
   font-size: 1.3rem;
