@@ -1,13 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mastermind</title>
+  <link rel="stylesheet" href="./src/styles/main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Playfair+Display&display=swap" rel="stylesheet" />
+  <script type="module" src="./src/scripts/main.js"></script>
+
+</head>
+
+<body>
+  <div class="background-shadows">
+    <div class="shadow candle-bg"></div>
+    <div class="shadow frame-bg"></div>
+    <div class="shadow flower-bg"></div>
+    <div class="shadow candle-bg right"></div>
+  </div>
+
+  <div class="container">
+    <div class="background-text">Mastermind</div>
+
+    <h1 class="title">Welcome to Mastermind</h1>
+   
+    
+    <button class="start-btn">Start Game</button>
+
+    <div class="shadow-elements">
+      <div class="leaf leaf1"></div>
+      <div class="leaf leaf2"></div>
+      <div class="candle"></div>
+      <div class="flower"></div>
+    </div>
+  </div>
+</body>
+
 </html>

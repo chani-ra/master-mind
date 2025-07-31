@@ -1,0 +1,82 @@
+/* פונטים */
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+form {
+  font-family: 'Varela Round', sans-serif;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #f8c9d8;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  margin: 40px auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* כותרת לטופס */
+form h2 {
+  text-align: center;
+  color: #d36b94;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+/* תוויות */
+form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #7e4a6d;
+  font-weight: bold;
+}
+
+/* שדות קלט */
+form input[type="text"],
+form input[type="email"],
+form textarea,
+form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #f0a6bf;
+  border-radius: 12px;
+  background-color: #fff0f5;
+  color: #5c3c50;
+  font-size: 1em;
+  transition: 0.3s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #d36b94;
+  outline: none;
+  background-color: #ffe6ee;
+}
+
+/* כפתור שליחה */
+form button,
+form input[type="submit"] {
+  background-color: #d36b94;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 30px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+form button:hover,
+form input[type="submit"]:hover {
+  background-color: #b7537c;
+}
+
+/* טקסטים קטנים */
+form small {
+  color: #a2779f;
+  display: block;
+  margin-top: -15px;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+}
