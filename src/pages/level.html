@@ -1,50 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="he">
-<head>
-  <meta charset="UTF-8">
-  <title>בחירת רמה - Mastermind</title>
-  <link rel="stylesheet" href="../styles/level.css">
-    <link rel="stylesheet" href="../styles/main.css">
 
-</head>
-<body class="level-page">
-  <div class="frame">
-    <div class="greeting-bubble">
-      <span id="greeting-text">שלום, שחקן יקר!</span>
-    </div>
-
-    <h1 class="game-title">ברוכים הבאים למשחק Mastermind</h1>
-    <p class="entry-description">המשחק בו המוח שלך יקבע את הגורל! בחר רמת קושי והתחל לשחק!</p>
-
-    <div class="level-options">
-      <button class="level-btn">קל</button>
-      <button class="level-btn">בינוני</button>
-      <button class="level-btn">קשה</button>
-    </div>
-
-    <button class="instructions-btn" onclick="toggleInstructions()">
-      ⚔️ הצגת הוראות המשחק
-    </button>
-
-    <div id="instructions-box" class="hidden">
-      <h2>📜 הוראות המשחק</h2>
-      <p>עליך לנחש את הצירוף הסודי שבחר המחשב. אחרי כל ניחוש, תקבל רמזים: מספר בולים ופגיעות. האם תוכל לפצח את הקוד?</p>
-      <button onclick="toggleInstructions()">סגור</button>
-    </div>
-  </div>
-
-  <script>
-    // הצגת שם המשתמש מה-localStorage
-    const name = localStorage.getItem("currentUserName") || "שחקן";
-    document.getElementById("greeting-text").innerText = `שלום לך, ${name}!`;
-
-    function toggleInstructions() {
-      const box = document.getElementById("instructions-box");
-      box.classList.toggle("hidden");
-    }
-  </script>
-</body>
-</html> -->
 
 
 
@@ -68,30 +22,37 @@
             <p class="passage">בחרי ברמה שברצונך לשחק</p>
 
             <div class="level-options">
-                <button class="level-btn btn">קל</button>
-                <button class="level-btn btn">בינוני</button>
-                <button class="level-btn btn">קשה</button>
+                <button class="level-btn btn"  data-level="easy" >קל</button>
+                <button class="level-btn btn"  data-level="medium">בינוני</button>
+                <button class="level-btn btn"  data-level="hard">קשה</button>
             </div>
 
             <button id="howToPlayBtn">
                 <span class="arrow">➤</span>
                 איך לשחק
             </button>
-            <div id="instructions-content" >
+            <div id="instructions-content">
                 <h2>מהלך המשחק:</h2>
-                <p>מטרת המשחק היא לגלות את קוד הצבעים הסודי שהמחשב בחר סדר של ארבעה צבעים בסדר המדויק תוך מספר מוגבל של ניסיונות.</p>
+                <p>מטרת המשחק היא לגלות את קוד הצבעים הסודי שהמחשב בחר סדר של ארבעה צבעים בסדר המדויק תוך מספר מוגבל של
+                    ניסיונות.</p>
 
-<p>המחשב בוחר סוד של ארבעה צבעים מתוך קבוצת צבעים מוגדרת. צבעים יכולים להופיע יותר מפעם אחת או לא לפי הגדרות המשחק. תפקידך לנחש את סדר הצבעים הנכון.</p>
+                <p>המחשב בוחר סוד של ארבעה צבעים מתוך קבוצת צבעים מוגדרת. צבעים יכולים להופיע יותר מפעם אחת או לא לפי
+                    הגדרות המשחק. תפקידך לנחש את סדר הצבעים הנכון.</p>
 
-<p>בכל סיבוב תזין את ניחושך סדר של ארבעה צבעים. אחרי כל ניחוש תקבל רמזים שיעזרו לך להתקרב לפתרון. עיגול שחור מציין צבע נכון במיקום הנכון ועיגול לבן מציין צבע נכון אך במקום הלא נכון. הרמזים לא מציינים איזה צבע רק כמה עיגולים שחורים ולבנים יש.</p>
+                <p>בכל סיבוב תזין את ניחושך סדר של ארבעה צבעים. אחרי כל ניחוש תקבל רמזים שיעזרו לך להתקרב לפתרון. עיגול
+                    שחור מציין צבע נכון במיקום הנכון ועיגול לבן מציין צבע נכון אך במקום הלא נכון. הרמזים לא מציינים איזה
+                    צבע רק כמה עיגולים שחורים ולבנים יש.</p>
 
-<p>המשחק נגמר כאשר ניחשת נכון את סדר הצבעים המדויק ואתה זוכה או שהגעת למספר המקסימלי של ניסיונות מבלי לגלות את הקוד והמחשב מנצח.</p>
+                <p>המשחק נגמר כאשר ניחשת נכון את סדר הצבעים המדויק ואתה זוכה או שהגעת למספר המקסימלי של ניסיונות מבלי
+                    לגלות את הקוד והמחשב מנצח.</p>
 
-<p>אם הצלחת לגלות את הקוד לפני תום הניסיונות אתה המנצח אם לא המחשב גבר עליך הפעם נסה שוב ותלמד מהרמזים.</p>
+                <p>אם הצלחת לגלות את הקוד לפני תום הניסיונות אתה המנצח אם לא המחשב גבר עליך הפעם נסה שוב ותלמד מהרמזים.
+                </p>
 
-<p>השתמש ברמזים החכמים כדי לצמצם את האפשרויות שים לב לא רק לצבעים אלא גם למיקומים נסה לשנות צבע אחד או שניים בכל ניחוש כדי לקבל מידע מדויק יותר.</p>
+                <p>השתמש ברמזים החכמים כדי לצמצם את האפשרויות שים לב לא רק לצבעים אלא גם למיקומים נסה לשנות צבע אחד או
+                    שניים בכל ניחוש כדי לקבל מידע מדויק יותר.</p>
 
-<p>כל ניחוש מקרב אותך לפיתרון הסודי תהנה תתמקד ותחשוב היטב.</p>
+                <p>כל ניחוש מקרב אותך לפיתרון הסודי תהנה תתמקד ותחשוב היטב.</p>
 
             </div>
         </div>

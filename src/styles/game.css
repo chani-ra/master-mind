@@ -1,0 +1,151 @@
+body {
+    background: url("../assets/images/parchment-bg.jpg") center/cover no-repeat;
+    font-family: 'Playfair Display', serif;
+    color: #3c2f1c;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+
+.secret-colors {
+    width: 80%;
+    height: 6vh;
+    background-color: #6e4e2e;
+    color: #e0d4b4;
+    font-size: 25px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(70, 50, 20, 0.4);
+}
+
+
+.palette {
+    display: flex;
+    align-self: flex-end;
+    justify-content: space-around;
+    background: #fdf5e6;
+    width: 150px;
+    height: 15px;
+    padding: 16px;
+    border: 4px double #c2a44f;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(70, 50, 20, 0.4);
+}
+
+.color-button {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #e0d4b4;
+    transition: transform 0.2s ease;
+}
+
+.color-button:hover {
+    transform: scale(1.1);
+}
+
+.game-board {
+
+    height: 80vh;
+    width: 90%;
+    max-width: 600px;
+    margin: 15px auto;
+    padding: 10px;
+    background: #fdf5e6;
+    border: 4px double #c2a44f;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(70, 50, 20, 0.4);
+}
+
+.guess-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 7px 0;
+    padding: 4px;
+    border-bottom: 1px dashed #c2a44f;
+}
+
+.color-slot {
+    width: 40px;
+    height: 40px;
+    margin: 0 4px;
+    border: 2px solid #6e4e2e;
+    border-radius: 50%;
+    background-color: #e0d4b4;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.color-slot:hover {
+    transform: scale(1.1);
+}
+
+.feedback {
+    display: grid;
+    grid-template-columns: repeat(2, 12px);
+    grid-template-rows: repeat(2, 12px);
+    gap: 4px;
+    margin-left: 20px;
+}
+
+.feedback-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid #6e4e2e;
+}
+
+.level-12 .color-slot {
+    width: clamp(18px, 3vw, 20px);
+    height: clamp(18px, 3vw, 20px);
+}
+
+.level-10 .color-slot {
+    width: clamp(30px, 4vw, 35px);
+    height: clamp(30px, 4vw, 35px);
+}
+
+.level-8 .color-slot {
+    width: clamp(35px, 6vw, 45px);
+    height: clamp(35px, 5vw, 45px);
+}
+
+#active-arrow {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: #c2a44f; /* צבע החץ */
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* צורת חץ */
+  transition: top 0.2s ease; /* מעבר חלק כשזז */
+}
+
+/* כפתור הבדיקה  */
+.check-btn {
+    background: #775803;
+    color: #fff;
+    font-size: 18px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.check-btn:hover {
+    background: #a88c3c;
+    transform: scale(1.05);
+}
+
+.check-btn:active {
+    transform: scale(0.95);
+}

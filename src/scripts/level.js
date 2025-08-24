@@ -3,20 +3,44 @@ const currentUserName = localStorage.getItem("currentUserName");
 
 const userExist = localStorage.getItem("userExist");
 
-const userNameGreeting = document.getElementById("userNameGreeting");
 
-if (currentUserName) {
-    if (userExist) {
-        userNameGreeting.textContent = `שלום לך ${currentUserName} השם שלך כבר מופיע אצלינו ברשימות.... טוב להפגש שוב!`;
+const showGreeting = () => {
+    const userNameGreeting = document.getElementById("userNameGreeting");
+
+    if (currentUserName) {
+        if (userExist === "true") {
+            userNameGreeting.textContent = `שלום לך ${currentUserName} השם שלך כבר מופיע אצלינו במערכת.... טוב להפגש שוב!`;
+        }
+        else {
+            userNameGreeting.textContent = `שלום לך ${currentUserName} ברוכה הבאה למסטרמיינד המשחק שלנו!`
+        }
     }
-    else{
-          userNameGreeting.textContent =`שלום לך${currentUserName} ברוכה הבאה למסטרמיינדת המשחק שלנו!`
-    }
-}
-else{
+};
 
-}
+const setupInstructionsToggle = () => {
 
-document.getElementById("howToPlayBtn").addEventListener("click", () => {
-      document.getElementById("instructions-content").classList.toggle("show");
+    document.getElementById("howToPlayBtn").addEventListener("click", () => {
+        document.getElementById("instructions-content").classList.toggle("show");
     });
+}
+
+const setupLevelButtons = () => {
+    const startGame = document.querySelectorAll(".level-btn");
+    startGame.forEach(btn => {
+
+        btn.addEventListener("click", () => {
+            const level = btn.dataset.level
+            console.log(level);
+
+            window.location.href = `../pages/game.html?level=${level}`;
+
+
+        })
+    });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    showGreeting();
+    setupInstructionsToggle();
+    setupLevelButtons();
+});
