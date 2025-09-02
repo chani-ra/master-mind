@@ -125,6 +125,22 @@ body {
     display: none;
 }
 
+#highScoresBtn {
+    background: #f7e6c7;
+    border: 2px solid #7a5c3c;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: transform 0.2s ease;
+}
+
+#highScoresBtn:hover {
+    transform: scale(1.05);
+}
+
+
 #instructions-content {
     background-color: #c2a44f;
     font-size: 25px;

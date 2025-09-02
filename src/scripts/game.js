@@ -116,6 +116,22 @@ const randomColors = () => {
 
 const secretCode = randomColors();
 
+// הצגת הקוד הסודי בלוח
+function showSecretCode() {
+  const realSecretColors = document.querySelector(".secret-colors");
+  realSecretColors.style.backgroundColor = "white";
+  realSecretColors.style.display = "flex";
+  realSecretColors.innerHTML = "";
+
+  secretCode.forEach(color => {
+    const slot = document.createElement("div");
+    slot.classList.add("color-slot");
+    slot.style.backgroundColor = color;
+    realSecretColors.appendChild(slot);
+  });
+}
+
+
 //  בדיקת הניחוש של השחקן מול הקוד
 const checkGuees = (secretArray, playerGuess) => {
   let bulls = 0; // בול
@@ -182,7 +198,7 @@ const fillNextSlot = (color) => {
     activeSlotIndex++;
 
     if (activeSlotIndex === slots.length) {
-      
+
     }
   }
 }
@@ -237,7 +253,7 @@ const updateArrow = () => {
 const showGameMessage = ({
   playerName = "",
   score = 0,
-  type = "win", 
+  type = "win",
   attemptNumber = 0,
   totalRows = 0,
   delay = 0, // הזמן לפני ביצוע הפונקציה שבסטטיימאווט
@@ -252,6 +268,8 @@ const showGameMessage = ({
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("game-message-content");
 
+     contentDiv.textContent = ""; 
+
     let title = "";
     let message = "";
 
@@ -262,25 +280,55 @@ const showGameMessage = ({
       else if (attemptNumber <= (2 * totalRows / 3)) cup = "🥈 כסף";
       else cup = "🥉 נחושת";
 
-      title = `ברכות! ${playerName}`;
-      message = `זכית בגביע ${cup}<br>ניקוד: ${score}<br>רמת קושי: ${level}`;
-    } 
+     
+  title = `ברכות! ${playerName}`;
+
+  // קודם מוסיפים כותרת
+  const h2 = document.createElement("h2");
+  h2.textContent = title;
+  contentDiv.appendChild(h2);
+  
+  // יוצרת את הפיסקה מחולקת לאלמנטים
+  const cupP = document.createElement("p");
+  cupP.textContent = `זכית בגביע ${cup}`;
+  const scoreP = document.createElement("p");
+  scoreP.textContent = `ניקוד: ${score}`;
+  const levelP = document.createElement("p");
+  levelP.textContent = `${level}רמת קושי: `;
+
+  contentDiv.appendChild(cupP);
+  contentDiv.appendChild(scoreP);
+  contentDiv.appendChild(levelP);
+}
+  
     // אם מדובר בכישלון
     else if
-     (type === "lose") {
+      (type === "lose") {
       title = "נגמר המשחק!";
-      message = `לא הצלחת לפצח את הקוד. הקוד הסודי היה: ${secretCode.join(", ")}`;
+      message = `  ${secretCode.join(", ")}:לא הצלחת לפצח את הקוד. הקוד הסודי היה:`;
+    }
+    else if (type === "error") {
+      title = " !!!שגיאה"
+      message = "יש למלא את כל השורה"
     }
 
-    contentDiv.innerHTML = `<h2>${title}</h2><p>${message}</p>`;
+   if(type !== "win"){
+    const h2 = document.createElement("h2");
+    h2.textContent = title;
+    const p = document.createElement("p");
+    p.textContent = message || "";
 
+    contentDiv.appendChild(h2);
+    contentDiv.appendChild(p);
+}
     // כפתור לשחק שוב 
+    if (type !== "error") {
     const playAgainBtn = document.createElement("button");
     playAgainBtn.textContent = "לשחק שוב";
     playAgainBtn.addEventListener("click", () => location.reload());
-
-
     contentDiv.appendChild(playAgainBtn);
+    }
+
     messageDiv.appendChild(contentDiv);
     document.body.appendChild(messageDiv);
 
@@ -306,7 +354,7 @@ checkBtn.textContent = "בדיקה";
 checkBtn.classList.add("check-btn");
 container.appendChild(checkBtn);
 // לוקחת מהלוקל סטורייג' את השם של השחקן
-    const currentUserName = localStorage.getItem("currentUserName") || "שחקן אנונימי";
+const currentUserName = localStorage.getItem("currentUserName") || "שחקן אנונימי";
 
 //  אירוע ללחיצה על כפתור בדיקה
 checkBtn.addEventListener("click", () => {
@@ -319,7 +367,11 @@ checkBtn.addEventListener("click", () => {
   const playerGuess = Array.from(slots).map(slot => slot.dataset.colorHex || "");
 
   if (playerGuess.includes("")) {
-    alert("חייבים למלא את כל השורה!");
+    showGameMessage({
+      type: "error",
+      message: "חייבים למלא את כל השורה!",
+      duration: 2000
+    });
     return;
   }
 
@@ -352,13 +404,13 @@ checkBtn.addEventListener("click", () => {
     saveWinToStorage(playerName, score, level);
 
     //באן אני מפעילה את הפונקציה שמביאה את הודעת הניצחון!
-   showGameMessage({
-    type: "win",
-    playerName: currentUserName,
-    score: score,
-    attemptNumber: attemptNumber,
-    totalRows: guessesCount
-});
+    showGameMessage({
+      type: "win",
+      playerName: playerName,
+      score: score,
+      attemptNumber: attemptNumber,
+      totalRows: guessesCount
+    });
     activeRow = -1;
     return;
   }
@@ -371,20 +423,8 @@ checkBtn.addEventListener("click", () => {
 
   if (activeRow < 0) {
 
+    showSecretCode();
 
-    const realSecretColors = document.querySelector(".secret-colors")
-
-    realSecretColors.style.backgroundColor = "white";
-    realSecretColors.style.display = "flex";
-
-    realSecretColors.innerHTML = "";
-
-    secretCode.forEach(color => {
-      const slot = document.createElement("div");
-      slot.classList.add("color-slot"); // אפשר לשמור את ה־CSS הקיים
-      slot.style.backgroundColor = color;
-      realSecretColors.appendChild(slot);
-    });
 
     const gameOverDiv = document.querySelector(".game-board");
     gameOverDiv.classList.add("game-over");
@@ -393,8 +433,8 @@ checkBtn.addEventListener("click", () => {
 
     showGameMessage({
       type: "lose",
-    playerName: currentUserName,
-    delay:2000
+      playerName: currentUserName,
+      delay: 1500
     })
   };
 });

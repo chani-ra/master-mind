@@ -38,9 +38,18 @@ const setupLevelButtons = () => {
         })
     });
 };
+const setupHighScoresButton = () => {
+    const highScoresBtn = document.getElementById("highScoresBtn");
+    highScoresBtn.addEventListener("click", () => {
+        // מעבירה לדף השיאים
+        window.location.href = "../pages/wins.html";
+    });
+};
+
 
 document.addEventListener("DOMContentLoaded", () => {
     showGreeting();
     setupInstructionsToggle();
     setupLevelButtons();
+    setupHighScoresButton();
 });
