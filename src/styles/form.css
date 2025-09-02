@@ -55,6 +55,11 @@ form select:focus {
   background-color: #fffce3;
 }
 
+.error {
+    border: 2px solid red;
+    outline: none;
+  }
+  
 /* כפתור שליחה */
 .c-btn{
     display: flex;

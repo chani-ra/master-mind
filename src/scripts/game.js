@@ -1,46 +1,88 @@
-//לוקח את הפרמטרים מהיו-אר-אל
+//  לוקח את הפרמטרים מהיו-אר-אל
 const params = new URLSearchParams(window.location.search);
 const level = params.get("level") || "easy";// ברירת מחדל "קל" ברגע שאין פרמטר"
 
-// אובייקט שמגדיר כמה שורות ניחושים יש לכל רמה
+document.addEventListener("DOMContentLoaded", () => {
+
+  setTimeout(() => {
+    showIntroAnimation();
+  }, 1100);
+});
+
+function showIntroAnimation() {
+
+  // const intireDiv = document.createElement("div");
+  // intireDiv.textContent = "";
+  // intireDiv.classList.add("intro-message");
+  // document.body.appendChild(intireDiv);
+  const intireDiv = document.querySelector(".intire-message")
+
+  const closeBtn = document.createElement("button");
+  closeBtn.classList.add("close-btn")
+  closeBtn.textContent = "×"; // אפשר גם "סגור" במקום ×
+
+  // הוספת אירוע לכפתור
+  closeBtn.addEventListener("click", () => {
+    intireDiv.remove(); // מסיר את הדיב מיד
+  });
+
+  intireDiv.appendChild(closeBtn); // מוסיף את הכפתור לדיב
+
+
+  // הופעה הדרגתית
+  setTimeout(() => intireDiv.classList.add("show"), 100);
+
+  // היעלמות כעבור 10 שניות
+  setTimeout(() => {
+    intireDiv.classList.remove("show");
+    intireDiv.classList.add("hide");
+  }, 10000);
+
+  //מסירה את הדיב
+  setTimeout(() => intireDiv.remove(), 10100);
+}
+
+//  קבלת שם השחקן מה-localStorage בצורה בטוחה
+
+//  הוספת מערך לניצחונות - נטען מלוקל סטורייג אם קיים
+let wins = JSON.parse(localStorage.getItem("wins")) || []; // 
+
+//  אובייקט שמגדיר כמה שורות ניחושים יש לכל רמה
 const levelsConfig = {
   easy: 12,
   medium: 10,
   hard: 8,
 };
 
-// קובע כמה שורות יהיו לפי הרמה
-const guessesCount = levelsConfig[level] || 12;
+//  קובע כמה שורות יהיו לפי הרמה
+const guessesCount = levelsConfig[level] || 8;
 console.log(`הרמה שנבחרה: ${level}, מספר שורות: ${guessesCount}`);
 
 const board = document.querySelector(".game-board");
-
 board.classList.add(`level-${guessesCount}`);
 
-
-// נתחיל מהשורה התחתונה
+//  נתחיל מהשורה התחתונה
 let activeRow = guessesCount - 1;
-// ומיקום הסלוט הבא למלא בשורה
+//  מיקום הסלוט הבא למלא בשורה
 let activeSlotIndex = 0;
 
 
-// לולאה שמייצרת את כל השורות על הלוח
+//  לולאה שמייצרת את כל השורות על הלוח
 for (let i = 0; i < guessesCount; i++) {
   const row = document.createElement("div");
   row.classList.add("guess-row");
 
-  // יצרית  4 הצבעים - התאים לניחוש
+  //  יצירת 4 הצבעים - התאים לניחוש
   for (let j = 0; j < 4; j++) {
     const slot = document.createElement("div");
     slot.classList.add("color-slot");
     row.appendChild(slot);
   }
 
-  // יוצרת את אזור הפידבק 
+  //  יוצרת את אזור הפידבק
   const feedback = document.createElement("div");
   feedback.classList.add("feedback");
 
-  // בכל פידבק יהיו 4 נקודות (black/white)
   for (let j = 0; j < 4; j++) {
     const dot = document.createElement("div");
     dot.classList.add("feedback-dot");
@@ -48,20 +90,20 @@ for (let i = 0; i < guessesCount; i++) {
   }
 
   row.appendChild(feedback);
-  board.appendChild(row);
+  board.append(row);
 }
 
-// הגדרת צבעים אפשריים למשחק
+//  הגדרת צבעים אפשריים למשחק
 const colors = [
-  "#6e4e2e", // חום כהה
-  "#c2a44f", // חום בהיר
-  "#7a8a54", // ירוק זית
-  "#a89f85", // שמנת כהה
-  "#6b3e3e", // בורדו כהה
-  "#4a4a4a"  // אפור כהה]
+  "#1856ddff",
+  "#ecea4dff",
+  "#aae61fff",
+  "#c78db6ff",
+  "#c24949ff",
+  "#4a4a4a"
 ]
 
-//הגרלת 4 מספרים רנדומלים מתוך המערך
+//  הגרלת 4 מספרים רנדומלים מתוך המערך
 const randomColors = () => {
   const rnArray = [];
   for (let i = 0; i < 4; i++) {
@@ -74,173 +116,285 @@ const randomColors = () => {
 
 const secretCode = randomColors();
 
-// בדיקת הניחוש של השחקן מול הקוד
+//  בדיקת הניחוש של השחקן מול הקוד
 const checkGuees = (secretArray, playerGuess) => {
   let bulls = 0; // בול
   let hits = 0; // פגיעה
 
-  const randomCopy = [...secretArray]; //  העתק של הקוד 
+  const randomCopy = [...secretArray]; // העתק של הקוד 
   const guessCopy = [...playerGuess];  // העתק של הניחוש
 
-  //בדיקת בול 
+  //  בדיקת בול
   for (let i = 0; i < secretArray.length; i++) {
     if (randomCopy[i] === guessCopy[i]) {
       bulls++;
-      randomCopy[i] = null; //  ניקוי הערך שכבר נמצא
+      randomCopy[i] = null;
       guessCopy[i] = null;
     }
   }
 
-  // בדיקת פגיעה
+  //  בדיקת פגיעה
   for (let i = 0; i < secretArray.length; i++) {
     for (let j = 0; j < secretArray.length; j++) {
       if (
-        guessCopy[i] !== null &&
-        randomCopy[j] !== null &&
+        guessCopy[i] &&                 // ← חייב להיות ערך לא ריק
+        randomCopy[j] &&                // ← חייב להיות ערך לא ריק
         guessCopy[i] === randomCopy[j]
       ) {
         hits++;
-        guessCopy[i] = null; //  שורה זו מונעת את החזרה על אותו צבע
+        guessCopy[i] = null;
         randomCopy[j] = null;
         break;
       }
     }
   }
-  console.log(bulls, hits);
 
+  console.log(bulls, hits);
   return { bulls, hits };
 }
 
-//בדיקה לקונסול
-const playerGuess = ["red", "blue", "green", "yellow"];
-checkGuees(secretCode, playerGuess);
-
-// יצירת פלטת הצבעים של השחקן
+//  יצירת פלטת הצבעים של השחקן
 const container = document.querySelector(".end");
-const gameBoard = document.querySelector(".game-board");
-
 const palette = document.createElement("div")
 palette.classList.add("palette");
 container.append(palette);
 
-//יצירת כפתורי הצבע בפלטת צבעים
 colors.forEach(color => {
   const colorBtn = document.createElement("div");
   colorBtn.classList.add("color-button");
   colorBtn.style.backgroundColor = color;
   colorBtn.dataset.colorHex = color;
-  colorBtn.addEventListener("click", () => {
-    fillNextSlot(color);
-  });
-  palette.appendChild(colorBtn);
+  colorBtn.addEventListener("click", () => fillNextSlot(color));
+  palette.append(colorBtn);
 });
 
-// פונקציה שממלאה את הסלוט הריק הבא בשורה הפעילה - בצבע שנבחר\ נלחץ בפלטת הצבעים
+//  פונקציה שממלאה את הסלוט הריק הבא בשורה הפעילה
 const fillNextSlot = (color) => {
   const rows = document.querySelectorAll(".guess-row");
-  if (activeRow < 0) return; // אם כבר עברנו את כל השורות
+  if (activeRow < 0) return;
 
   const currentRow = rows[activeRow];
   const slots = currentRow.querySelectorAll(".color-slot");
 
   if (activeSlotIndex < slots.length) {
     slots[activeSlotIndex].style.backgroundColor = color;
-    slots[activeSlotIndex].dataset.colorHex = color; //  שמירת הצבע בשורה
-
+    slots[activeSlotIndex].dataset.colorHex = color;
     activeSlotIndex++;
 
-    // אם מילאנו את כל הסלוטים בשורה, עוברים לשורה שמעליה
     if (activeSlotIndex === slots.length) {
-      activeRow--;
-      activeSlotIndex = 0;
+      
     }
   }
-  updateArrow();
 }
-// יצירת חץ דינמי ע"מ להקל על השחקן שידע באיזה שורה אוחזים
+
+//  יצירת חץ דינמי
 const arrow = document.createElement("div");
 arrow.id = "active-arrow";
-
 board.appendChild(arrow);
+
 
 const updateArrow = () => {
   const rows = document.querySelectorAll(".guess-row");
   if (activeRow >= 0) {
     const currentRow = rows[activeRow];
-
-    // מיקום יחסי של השורה בתוך הלוח
     const rowOffsetTop = currentRow.offsetTop;
     const rowHeight = currentRow.offsetHeight;
     arrow.style.top = (rowOffsetTop + rowHeight / 2 - arrow.offsetHeight / 2) + "px";
-    arrow.style.right = "100px"; // <-- החץ יוצב 20 פיקסלים שמאלה מהשורה
-
+    arrow.style.right = "100px";
     arrow.style.display = "block";
   } else {
     arrow.style.display = "none";
   }
 }
 
-updateArrow();
+//  פונקציה להצגת הודעת ניצחון עם גביע
+// const showWinMessage = (playerName, score, attemptNumber, totalRows) => {
+//   const winDiv = document.createElement("div");
+//   winDiv.classList.add("win-message");
+
+//   const contentDiv = document.createElement("div");
+//   contentDiv.classList.add("win-message-content");
+
+//   let cup;
+//   if (attemptNumber <= totalRows / 3) cup = "🏆 זהב";
+//   else if (attemptNumber <= (2 * totalRows / 3)) cup = "🥈 כסף";
+//   else cup = "🥉 נחושת";
+
+//   contentDiv.innerHTML = `
+//     <h2>ברכות! ${playerName}</h2>
+//     <p>ניצחת בגביע ${cup}</p>
+//     <p>ניקוד: ${score}</p>
+//     <p>רמת קושי: ${level}</p>
+//   `;
 
 
-//   יצירת כפתור "בדיקה"
+//   winDiv.append(contentDiv);
+//   document.body.appendChild(winDiv);
+
+// כפתור שמרענן שוב את הדף - השחקן יכול לשחק שוב
+//   
+//  הפונקציה להצגת הודעה דינמית של ניצחון או כישלון
+const showGameMessage = ({
+  playerName = "",
+  score = 0,
+  type = "win", 
+  attemptNumber = 0,
+  totalRows = 0,
+  delay = 0, // הזמן לפני ביצוע הפונקציה שבסטטיימאווט
+  duration = 20000 //  זמן ההצגה
+}) => {
+  setTimeout(() => {
+    // יצרתי דיב שישמש כהודעה
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("game-message");
+
+    // יצרתי דיב פנימי שיכיל את התוכן של ההודעה
+    const contentDiv = document.createElement("div");
+    contentDiv.classList.add("game-message-content");
+
+    let title = "";
+    let message = "";
+
+    // במידה והשחקן ניצח
+    if (type === "win") {
+      let cup;
+      if (attemptNumber <= totalRows / 3) cup = "🏆 זהב";
+      else if (attemptNumber <= (2 * totalRows / 3)) cup = "🥈 כסף";
+      else cup = "🥉 נחושת";
+
+      title = `ברכות! ${playerName}`;
+      message = `זכית בגביע ${cup}<br>ניקוד: ${score}<br>רמת קושי: ${level}`;
+    } 
+    // אם מדובר בכישלון
+    else if
+     (type === "lose") {
+      title = "נגמר המשחק!";
+      message = `לא הצלחת לפצח את הקוד. הקוד הסודי היה: ${secretCode.join(", ")}`;
+    }
+
+    contentDiv.innerHTML = `<h2>${title}</h2><p>${message}</p>`;
+
+    // כפתור לשחק שוב 
+    const playAgainBtn = document.createElement("button");
+    playAgainBtn.textContent = "לשחק שוב";
+    playAgainBtn.addEventListener("click", () => location.reload());
+
+
+    contentDiv.appendChild(playAgainBtn);
+    messageDiv.appendChild(contentDiv);
+    document.body.appendChild(messageDiv);
+
+    setTimeout(() => messageDiv.remove(), duration);
+  }, delay);
+};
+
+
+//  פונקציה לשמירת ניצחון וניקוד של השחקן
+const saveWinToStorage = (playerName, score, level) => {
+  const win = {
+    name: playerName,   // שם השחקן
+    score: score,       // ניקוד
+    level: level        // רמת המשחק
+  };
+  wins.push(win);  // מוסיפים למערך הקיים
+  localStorage.setItem("wins", JSON.stringify(wins)); // שמירת המערך בלוקל סטורייג
+}
+
+//  יצירת כפתור "בדיקה"
 const checkBtn = document.createElement("button");
 checkBtn.textContent = "בדיקה";
 checkBtn.classList.add("check-btn");
 container.appendChild(checkBtn);
+// לוקחת מהלוקל סטורייג' את השם של השחקן
+    const currentUserName = localStorage.getItem("currentUserName") || "שחקן אנונימי";
 
-//  הוספה שלי: אירוע ללחיצה על כפתור "בדיקה"
+//  אירוע ללחיצה על כפתור בדיקה
 checkBtn.addEventListener("click", () => {
+
   const rows = document.querySelectorAll(".guess-row");
   const currentRow = rows[activeRow];
   const slots = currentRow.querySelectorAll(".color-slot");
   const feedbackDots = currentRow.querySelectorAll(".feedback-dot");
 
-  // לוקח את הצבעים שהשחקן בחר בשורה
-  const playerGuess = Array.from(slots).map(slot => slot.style.backgroundColor);
+  const playerGuess = Array.from(slots).map(slot => slot.dataset.colorHex || "");
 
-  // אם יש סלוטים ריקים, לא נבדוק
   if (playerGuess.includes("")) {
-    alert("חייבים למלא את כל הלוח!");
+    alert("חייבים למלא את כל השורה!");
     return;
   }
 
-  // בדיקת השורה מול הקוד הסודי
   const result = checkGuees(secretCode, playerGuess);
 
-  //  ניקוי הפידבק הקודם
   feedbackDots.forEach(dot => {
-    dot.style.backgroundColor = "transparent";
+    // dot.style.backgroundColor = "transparent";
   });
 
-  //  צביעה של ה־feedback לפי בול/פגיעה
   let filledDots = 0;
-
-  // קודם כל בול (שחור)
   for (let i = 0; i < result.bulls; i++) {
     feedbackDots[filledDots].style.backgroundColor = "black";
     filledDots++;
   }
-
-  // אחר כך פגיעה (לבן)
   for (let i = 0; i < result.hits; i++) {
     feedbackDots[filledDots].style.backgroundColor = "white";
     filledDots++;
   }
 
-  // אם השחקן פתר נכון (4 בול) -> הודעה
+  //  אם השחקן פתר נכון (4 בול)
   if (result.bulls === 4) {
-    alert("כל הכבוד! פתרת את הקוד 🎉");
-    activeRow = -1; // סוגרים את המשחק
+    const attemptNumber = guessesCount - activeRow;
+    const unFullRowes = guessesCount - attemptNumber;
+    const score = unFullRowes * 100;
+    // לוקל סטורייג קבלת שם השחקן מה-
+
+    const playerName = currentUserName || "שחקן אנונימי";
+
+    //באן אני שומרת את הנתונים של השחקן בלןקל-סטורייג
+    saveWinToStorage(playerName, score, level);
+
+    //באן אני מפעילה את הפונקציה שמביאה את הודעת הניצחון!
+   showGameMessage({
+    type: "win",
+    playerName: currentUserName,
+    score: score,
+    attemptNumber: attemptNumber,
+    totalRows: guessesCount
+});
+    activeRow = -1;
     return;
   }
-
-  // אם לא פתר -> עוברים לשורה הבאה
+  // במידה ולא ניצח עוברים לשורה הבאה בתור לסלוט הראשון בתור
   activeRow--;
   activeSlotIndex = 0;
+  // מעדכנת תא החץ ליזוז לשורה הבאה
+  updateArrow();
 
-  // אם נגמרו השורות -> הפסד
+
   if (activeRow < 0) {
-    alert("נגמרו לך הניחושים! הקוד היה: " + secretCode.join(", "));
-  }
+
+
+    const realSecretColors = document.querySelector(".secret-colors")
+
+    realSecretColors.style.backgroundColor = "white";
+    realSecretColors.style.display = "flex";
+
+    realSecretColors.innerHTML = "";
+
+    secretCode.forEach(color => {
+      const slot = document.createElement("div");
+      slot.classList.add("color-slot"); // אפשר לשמור את ה־CSS הקיים
+      slot.style.backgroundColor = color;
+      realSecretColors.appendChild(slot);
+    });
+
+    const gameOverDiv = document.querySelector(".game-board");
+    gameOverDiv.classList.add("game-over");
+
+    const lastPlayAgain = document.createElement("div")
+
+    showGameMessage({
+      type: "lose",
+    playerName: currentUserName,
+    delay:2000
+    })
+  };
 });

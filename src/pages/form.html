@@ -14,9 +14,12 @@
     <div class="container">
         <form id="player-form">
             <label for="player-name">Name:</label>
-            <input type="text" id="player-name" name="player-name" required />
+            <input type="text" id="player-name" name="player-name" required 
+            pattern="[A-Za-zא-ת\s]+" title="רק אותיות מותרות"/>
+            <p id="errorMsg" style="color: red; display: none;">מותר להשתמש רק בעברית, אנגלית ורווחים</p>
             <label for="player-phone">pone-number:</label>
-            <input type="text" id="player-phone" name="player-phone" required />
+            <input type="text" id="player-phone" name="player-phone" required 
+             pattern="[0-9]{7,10}"    title="רק מספרים, בין 7 ל-10 ספרות"/>
             <label for="player-email">email:</label>
             <input type="email" id="player-email" name="player-email" required />
             <div class="c-btn">
