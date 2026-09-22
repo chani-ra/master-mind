@@ -1,4 +1,6 @@
 
+
+
 const form = document.getElementById("player-form");
 
 const nameInput = document.getElementById("player-name");

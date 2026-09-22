@@ -8,15 +8,18 @@
   <link rel="stylesheet" href="../styles/main.css">
   <link rel="stylesheet" href="../styles/game.css">
   <script type="module" src="../scripts/game.js"></script>
+  <!-- <script src="../scripts/music.js" defer></script> -->
+
 </head>
 <!--  שכחתי לכתוב בהתחלה dir-rtl !!!מה שקרה שבניתי את כל הקוד בצורה הזאת ומאוחר לי מדי בשביל להחליף כיוונים  אשמח להבנה ולהתחשבות - תודה! -->
+
 <body dir="ltr">
-  <div  class="intire-message">
+  <div class="intire-message">
     <h2>MASTER-MIND</h2>
-    <p>🗝 גש לפלטת הצבעים ובחר צבע </p>
-    <p>🗝.מלא את כל 4 הצבעים בכל שורה.</p>
-    <p>🗝 לחץ על "בדיקה" כדי לבדוק את הניחוש שלך.</p>
-    <p>🗝. נסה לנחש את הקוד הסודי לפני שהשורות נגמרות!</p>
+    <p> גש לפלטת הצבעים ובחר צבע 🗝</p>
+    <p>.מלא את כל 4 הצבעים בכל שורה.🗝</p>
+    <p> לחץ על "בדיקה" כדי לבדוק את הניחוש שלך. 🗝</p>
+    <p>. נסה לנחש את הקוד הסודי לפני שהשורות נגמרות! 🗝</p>
 
   </div>
   <div class="container">
@@ -26,6 +29,16 @@
   </div>
   <div class="end"></div>
 
+
+<audio id="bg-audio" loop>
+  <source src= "../assets/sounds/צעד מגנטי.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="check-sound">
+  <source src="check.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn">🔊</button>
 
 </body>
 
