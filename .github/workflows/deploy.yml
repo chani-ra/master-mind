@@ -1,0 +1,50 @@
+name: Mastermind CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mastermind-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Build Docker Image
+        run: docker build --platform linux/amd64 -t chaniyakov/mastermind:latest .
+
+      - name: Test Container
+        run: |
+          docker run -d --name mastermind-ci -p 127.0.0.1:8080:80 chaniyakov/mastermind:latest
+          curl --fail --silent --show-error --retry 5 --retry-connrefused http://localhost:8080/ > /dev/null
+
+      - name: Login to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          printf '%s' "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+      - name: Push Docker Image
+        if: github.ref == 'refs/heads/main'
+        run: docker push chaniyakov/mastermind:latest
+
+      - name: Deploy to Render
+        if: github.ref == 'refs/heads/main'
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          curl --fail --silent --show-error --request POST "$RENDER_DEPLOY_HOOK"

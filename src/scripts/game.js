@@ -1,5 +1,13 @@
+import bgMusicUrl from '../assets/sounds/צעד מגנטי.mp3';
+import slotSoundUrl from '../assets/sounds/אנטר.wav';
+import winSoundUrl from '../assets/sounds/applause.mp3';
+import failSoundUrl from '../assets/sounds/piano.mp3';
+import errorSoundUrl from '../assets/sounds/gong_1.mp3';
+import checkSoundUrl from '../assets/sounds/tyarin.mp3';
+import openSoundUrl from '../assets/sounds/tyarari.mp3';
+
 //  - מוזיקה ברקע
-const bgAudio = new Audio("../assets/sounds/צעד מגנטי.mp3");
+const bgAudio = new Audio(bgMusicUrl);
 bgAudio.loop = true;
 bgAudio.volume = 0.2;
 
@@ -361,12 +369,12 @@ const saveWinToStorage = (playerName, score, level) => {
 }
 
 // קבצי שמע שהוספתי לכפתור בדיקה ולניצחון
-const slotAudio = new Audio("../assets/sounds/אנטר.wav");
-const winAudio = new Audio("../assets/sounds/applause.mp3");
-const failAudio = new Audio("../assets/sounds/piano.mp3");
-const errorAudio = new Audio("../assets/sounds/gong_1.mp3");
-const checkAudio = new Audio("../assets/sounds/tyarin.mp3");
-const openkAudio = new Audio("../assets/sounds/tyarari.mp3");
+const slotAudio = new Audio(slotSoundUrl);
+const winAudio = new Audio(winSoundUrl);
+const failAudio = new Audio(failSoundUrl);
+const errorAudio = new Audio(errorSoundUrl);
+const checkAudio = new Audio(checkSoundUrl);
+const openkAudio = new Audio(openSoundUrl);
 
 
 
