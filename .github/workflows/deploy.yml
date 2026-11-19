@@ -28,7 +28,7 @@ jobs:
       - name: Test Container
         run: |
           docker run -d --name mastermind-ci -p 127.0.0.1:8080:80 chaniyakov/mastermind:latest
-          curl --fail --silent --show-error --retry 5 --retry-connrefused http://localhost:8080/ > /dev/null
+          curl --fail --silent --show-error --retry 10 --retry-all-errors --retry-delay 1 --connect-timeout 2 --max-time 5 --output /dev/null http://127.0.0.1:8080/
 
       - name: Login to Docker Hub
         if: github.ref == 'refs/heads/main'
