@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="he">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,38 +7,55 @@
   <link rel="stylesheet" href="../styles/main.css">
   <link rel="stylesheet" href="../styles/game.css">
   <script type="module" src="../scripts/game.js"></script>
-  <!-- <script src="../scripts/music.js" defer></script> -->
-
 </head>
-<!--  שכחתי לכתוב בהתחלה dir-rtl !!!מה שקרה שבניתי את כל הקוד בצורה הזאת ומאוחר לי מדי בשביל להחליף כיוונים  אשמח להבנה ולהתחשבות - תודה! -->
-
-<body dir="ltr">
-  <div class="intire-message">
-    <h2>MASTER-MIND</h2>
-    <p> גש לפלטת הצבעים ובחר צבע 🗝</p>
-    <p>.מלא את כל 4 הצבעים בכל שורה.🗝</p>
-    <p> לחץ על "בדיקה" כדי לבדוק את הניחוש שלך. 🗝</p>
-    <p>. נסה לנחש את הקוד הסודי לפני שהשורות נגמרות! 🗝</p>
-
-  </div>
-  <div class="container">
-    <div class="secret-colors">??? Guesse Me ???</div>
-    <div class="game-board"></div>
-
-  </div>
-  <div class="end"></div>
-
-
-<audio id="bg-audio" loop>
-  <source src= "../assets/sounds/צעד מגנטי.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="check-sound">
-  <source src="check.mp3" type="audio/mpeg">
-</audio>
-
-<button class="music-btn">🔊</button>
-
+<body dir="ltr" class="game-page">
+  <main class="game-layout">
+    <section class="container" aria-label="לוח המשחק">
+      <div class="secret-colors" aria-label="הקוד הסודי">? Guess Me ?</div>
+      <div class="game-board"></div>
+    </section>
+    <aside class="end" dir="rtl">
+      <header class="game-heading"><h1>Mastermind</h1><span id="level-label"></span></header>
+      <div class="audio-actions" role="group" aria-label="הגדרות ועזרה">
+        <button class="music-btn" type="button" aria-label="מוזיקת רקע"><span class="tool-icon" aria-hidden="true">♫</span><span class="tool-name">מוזיקה</span><span class="tool-state"></span></button>
+        <button id="effects-btn" type="button" aria-label="אפקטים קוליים"><span class="tool-icon" aria-hidden="true">♪</span><span class="tool-name">צלילים</span><span class="tool-state"></span></button>
+        <button id="help-btn" type="button"><span class="tool-icon" aria-hidden="true">?</span><span class="tool-name">הוראות</span></button>
+      </div>
+      <div class="game-stats">
+        <div><span>ניסיונות שנותרו</span><strong id="attempts-left"></strong></div>
+        <div><span>זמן משחק</span><strong id="game-time" dir="ltr">0:00</strong></div>
+        <div class="points-stat"><span>ניקוד אפשרי בניחוש הבא</span><strong id="potential-score"></strong></div>
+      </div>
+      <progress id="attempt-progress" value="0" aria-label="ניסיונות שנוצלו"></progress>
+      <div class="game-controls">
+        <h2>בחר צבע</h2>
+        <div class="palette" dir="ltr" role="group" aria-label="בחירת צבעים"></div>
+        <p class="palette-tip">לבחירה מהירה: מקשים 1–6</p>
+        <button class="check-btn" type="button">בדיקת ניחוש</button>
+        <div class="edit-actions"><button id="undo-btn" type="button"><span aria-hidden="true">↶</span> ביטול אחרון</button><button id="clear-btn" type="button">ניקוי שורה</button></div>
+        <p id="game-status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="feedback-legend"><span><i class="legend-dot bull"></i> צבע ומיקום נכונים</span><span><i class="legend-dot hit"></i> צבע נכון, מיקום שונה</span></div>
+      <nav class="game-nav" aria-label="ניווט במשחק"><button class="playAgain-btn" type="button"><span aria-hidden="true">↻</span> משחק חדש</button><a href="level.html">בחירת רמה</a><a href="wins.html">טבלת שיאים</a></nav>
+    </aside>
+  </main>
+  <dialog id="help-dialog" dir="rtl" class="game-dialog intire-message" aria-labelledby="help-title">
+    <button id="dismiss-help" class="close-btn" type="button" aria-label="סגירת הוראות" autofocus>×</button>
+    <h2 id="help-title">MASTER-MIND</h2>
+    <h3>איך משחקים?</h3>
+    <p>בחר ארבעה צבעים לפי הסדר ולחץ על בדיקה. אפשר לבחור צבע יותר מפעם אחת. מתחילים בשורה התחתונה ומתקדמים כלפי מעלה.</p>
+    <p>עיגול שחור: צבע ומיקום נכונים. עיגול לבן: צבע נכון במיקום אחר. סדר הרמזים אינו מציין את מיקום הצבעים.</p>
+    <p>ככל שתפתור בפחות ניסיונות וברמה גבוהה יותר, תצבור יותר נקודות. הזמן משמש רק במקרה של ניקוד זהה.</p>
+    <p class="help-keyboard">מקלדת: 1–6 לבחירת צבע, Backspace לביטול, Enter לבדיקה.</p>
+    <button id="close-help" type="button">הבנתי, בואו נשחק!</button>
+    <div class="intro-countdown" aria-hidden="true"><span></span></div>
+  </dialog>
+  <dialog id="result-dialog" dir="rtl" class="game-dialog">
+    <h2 id="result-title"></h2><p id="result-medal"></p>
+    <div id="result-code" class="result-code" dir="ltr"></div>
+    <p id="result-details"></p><strong id="result-score"></strong><p id="result-breakdown"></p><p id="result-record"></p>
+    <div class="result-actions"><button id="again-btn" type="button">שחק שוב</button><a href="level.html">בחירת רמה</a><a href="wins.html">שיאים</a></div>
+    <button id="close-result" type="button">חזרה ללוח</button>
+  </dialog>
 </body>
-
 </html>

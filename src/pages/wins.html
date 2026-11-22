@@ -1,34 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wins</title>
-    <link rel="stylesheet" href="../styles/wins.css">
-    <!-- <link rel="stylesheet" href="../styles/main.css"> -->
-    <script type="module" src="../scripts/wins.js"></script>
-    <!-- <script src="../scripts/music.js" defer></script> -->
-
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mastermind | שיאים</title>
+  <link rel="stylesheet" href="../styles/main.css"><link rel="stylesheet" href="../styles/wins.css">
+  <script type="module" src="../scripts/wins.js"></script>
 </head>
-
-<body dir="rtl">
+<body class="scores-page">
+  <main class="scores-panel">
     <h1>🏆 טבלת השיאים</h1>
-    <table id="scoresTable">
-        <thead>
-            <tr>
-                <th>מקום</th>
-                <th>שם שחקן</th>
-                <th>ניקוד</th>
-                <th>רמה</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <button class="btn">חזרה למשחק</button>
-    <!-- <audio id="bg-audio" src="../assets/sounds/צעד מגנטי.mp3" loop></audio> -->
-
+    <h2 id="personal-title">הסטטיסטיקות שלי</h2>
+    <div class="personal-stats" id="personal-stats"></div>
+    <div class="score-toolbar"><h2>תוצאות המשחקים</h2><label>רמה: <select id="level-filter"><option value="all">כל הרמות</option><option value="easy">קל</option><option value="medium">בינוני</option><option value="hard">קשה</option></select></label></div>
+    <p class="score-note">מיון לפי ניקוד, ובשוויון לפי זמן. הנתונים נשמרים בדפדפן הזה בלבד.</p>
+    <div class="table-wrap"><table id="scoresTable"><thead><tr><th>מקום</th><th>שם שחקן</th><th>ניקוד</th><th>רמה</th><th>ניסיונות</th><th>זמן</th></tr></thead><tbody></tbody></table></div>
+    <details id="legacy-scores" hidden><summary>שיאים מהגרסה הקודמת (שיטת ניקוד ישנה)</summary><div class="table-wrap"><table><thead><tr><th>שם</th><th>ניקוד</th><th>רמה</th></tr></thead><tbody id="legacy-body"></tbody></table></div></details>
+    <a class="return-btn" href="level.html">חזרה לבחירת רמה</a>
+  </main>
 </body>
-
 </html>
