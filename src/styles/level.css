@@ -161,3 +161,11 @@ body {
     padding: 10px 15px;
     /* מוסיפים פדינג כשהוא פתוח */
 }
+body.level-page { height: auto; min-height: 100vh; overflow: auto; }
+.level-page .parchment-wrapper { box-sizing: border-box; width: min(100%, 800px); padding: 16px; }
+.level-page .speech-bubble { box-sizing: border-box; width: 100%; }
+.level-page .level-options { flex-wrap: wrap; gap: 10px; }
+.level-page .level-btn { margin-top: 0; padding: 14px 24px; min-width: 105px; }
+.level-page .level-btn small { display: block; font-size: 12px; margin-top: 5px; }
+.level-page #instructions-content { box-sizing: border-box; }
+@media (max-width: 540px) { .level-page .speech-bubble { padding: 16px; } .level-page .welcome-title { font-size: 2rem; } .level-page .passage { font-size: 20px; } .level-page .level-btn { flex: 1; min-width: 80px; padding: 12px 7px; } }
